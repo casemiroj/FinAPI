@@ -92,4 +92,19 @@ app.get('/statement', verifyIfExistAccount,(request, response) => {
   return response.json(costumer.statement);
 });
 
+app.get('/statement/date', verifyIfExistAccount,(request, response) => {
+  const { costumer } = request;
+  const { date } = request.query;
+
+  const dateFormat = new Date(date + " 00:00");
+
+  const statement = costumer.statement.filter(
+    (statement) =>
+      statement.createdAt.toDateString() === 
+      new Date(dateFormat).toDateString()
+  );
+
+  return response.json(statement);
+});
+
 app.listen(3333);
