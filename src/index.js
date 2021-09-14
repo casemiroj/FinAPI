@@ -1,4 +1,3 @@
-const { application } = require('express');
 const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 
@@ -24,6 +23,14 @@ app.post('/account', (request, response) => {
   });
 
   return response.status(201).send();
+});
+
+app.get('/statement/:cpf', (request, response) => {
+  const { cpf } = request.params;
+
+  const costumer = costumers.find(costumer => costumer.cpf == cpf);
+
+  return response.json(costumer.statement);
 });
 
 app.listen(3333);
