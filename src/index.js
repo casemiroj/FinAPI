@@ -25,10 +25,12 @@ app.post('/account', (request, response) => {
   return response.status(201).send();
 });
 
-app.get('/statement/:cpf', (request, response) => {
-  const { cpf } = request.params;
+app.get('/statement', (request, response) => {
+  const { cpf } = request.headers;
 
   const costumer = costumers.find(costumer => costumer.cpf == cpf);
+
+  if(!costumer) response.status(400).json({error: "Costumer not found"})
 
   return response.json(costumer.statement);
 });
