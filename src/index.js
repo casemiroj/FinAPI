@@ -38,6 +38,22 @@ app.post('/account', (request, response) => {
   return response.status(201).send();
 });
 
+app.post('/deposit', verifyIfExistAccount, (request, response) => {
+  const { description, amount } = request.body;
+  const { costumer } = request;
+
+  const statementOperation = {
+    description,
+    amount,
+    createdAt: new Date(),
+    type: 'credit'
+  };
+
+  costumer.statement.push(statementOperation);
+
+  response.status(201).send();
+});
+
 app.get('/statement', verifyIfExistAccount,(request, response) => {
   const { costumer } = request;
   return response.json(costumer.statement);
