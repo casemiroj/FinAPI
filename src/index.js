@@ -122,4 +122,20 @@ app.put('/account', verifyIfExistAccount, (request, response) => {
   response.status(201).send();
 });
 
+app.delete('/account', verifyIfExistAccount, (request, response) => {
+  const { costumer } = request;
+
+  costumers.splice(costumer, 1);
+
+  return response.status(200).json(costumers);
+});
+
+app.get('/balance', verifyIfExistAccount, (request,response) => {
+  const { costumer } = request;
+
+  const balance = getBalance(costumer.statement);
+
+  return response.json(balance);
+});
+
 app.listen(3333);
