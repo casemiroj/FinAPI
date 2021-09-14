@@ -107,4 +107,19 @@ app.get('/statement/date', verifyIfExistAccount,(request, response) => {
   return response.json(statement);
 });
 
+app.get('/account',verifyIfExistAccount, (request, response) => {
+  const { costumer } = request;
+
+  return response.json(costumer)
+});
+
+app.put('/account', verifyIfExistAccount, (request, response) => {
+  const { name } = request.body;
+  const { costumer } = request;
+
+  costumer.name = name;
+
+  response.status(201).send();
+});
+
 app.listen(3333);
